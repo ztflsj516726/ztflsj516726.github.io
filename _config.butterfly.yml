@@ -20,7 +20,7 @@ menu:
   主页: / || fas fa-home
   生活||fas fa-list:
     音乐: /music/ || fas fa-music
-    电影: /movies/ || fas fa-video
+    电影: /life/ || fas fa-video
 
 # --------------------------------------
 # Code Blocks Settings
@@ -65,10 +65,10 @@ disable_top_img: false
 default_top_img:
 
 # The banner image of index page
-index_img: /img/dog.jpg
+index_img: /img/index.jpg
 
 # The banner image of archive page
-archive_img: 
+archive_img: /img/archive.jpg
 
 # Note: tag page, not tags page
 tag_img: 
@@ -91,7 +91,7 @@ footer_img: false
 
 # Website Background
 # Can set it to color or image url
-background: /img/dog.jpg
+background: /img/index.jpg
 
 cover:
   # Disable the cover or not
@@ -100,14 +100,12 @@ cover:
   archives_enable: true
   # When cover is not set, the default cover is displayed
   default_cover: 
-    - /img/dog.jpg
     - /img/post/post1.jpg
     - /img/post/post2.jpg
     - /img/post/post3.jpg
     - /img/post/post4.jpg
-    - /img/post/post5.gif
-    - /img/post/post6.gif
-    - /img/post/post7.gif
+    - /img/post/post5.jpg
+    - /img/post/post6.jpg
 
 # Replace Broken Images
 error_img:
@@ -297,7 +295,7 @@ aside:
       link: https://github.com/ztflsj516726
   card_announcement:
     enable: true
-    content: This is my Blog
+    content: 留下一些什么吧。
   card_recent_post:
     enable: true
     # If set 0 will show all
@@ -487,7 +485,7 @@ search:
   local_search:
     enable: true
     # Preload the search data when the page loads.
-    preload: true
+    preload: false
     # Show top n results per article, show all results by setting to -1
     top_n_per_article: 1
     # Unescape html strings to the readable one.
@@ -858,7 +856,7 @@ canvas_fluttering_ribbon:
 # canvas_nest
 # https://github.com/hustcc/canvas-nest.js
 canvas_nest:
-  enable: true
+  enable: false
   # Color of lines, default: '0,0,0'; RGB values: (R,G,B).(note: use ',' to separate.)
   color: "(100,200,255)"
   # The opacity of line (0~1)
@@ -877,7 +875,7 @@ fireworks:
 
 # Mouse click effects: Heart symbol
 click_heart:
-  enable: true
+  enable: false
   mobile: true
 
 # Mouse click effects: words
