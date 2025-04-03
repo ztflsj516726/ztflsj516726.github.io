@@ -68,10 +68,10 @@ default_top_img:
 index_img: /img/dog.jpg
 
 # The banner image of archive page
-archive_img:
+archive_img: 
 
 # Note: tag page, not tags page
-tag_img:
+tag_img: 
 
 # The banner image of tag page, you can set the banner image for each tag
 # Format:
@@ -79,7 +79,7 @@ tag_img:
 tag_per_img:
 
 # Note: category page, not categories page
-category_img:
+category_img: /img/category.png
 
 # The banner image of category page, you can set the banner image for each category
 # Format:
@@ -101,14 +101,13 @@ cover:
   # When cover is not set, the default cover is displayed
   default_cover: 
     - /img/dog.jpg
-    - /img/post1.jpg
-    - /img/post2.jpg
-    - /img/post3.jpg
-    - /img/post4.jpg
-    - /img/post5.gif
-    - /img/post6.gif
-    - /img/post7.gif
-
+    - /img/post/post1.jpg
+    - /img/post/post2.jpg
+    - /img/post/post3.jpg
+    - /img/post/post4.jpg
+    - /img/post/post5.gif
+    - /img/post/post6.gif
+    - /img/post/post7.gif
 
 # Replace Broken Images
 error_img:
@@ -267,7 +266,7 @@ noticeOutdate:
 footer:
   owner:
     enable: true
-    since: 2019
+    since: 2025
   custom_text:
   # Copyright of theme and framework
   copyright: false
