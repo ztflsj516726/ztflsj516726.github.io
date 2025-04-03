@@ -352,10 +352,6 @@ window.addEventListener('load', () => {
       event.preventDefault(); // 阻止浏览器默认行为（如Chrome地址栏聚焦）
       openSearch(); // 假设这是打开搜索的函数
     }
-    if (event.code === 'Escape') {
-      closeSearch()
-      document.removeEventListener('keydown', f)
-    }
   })
 
   searchClickFn()
