@@ -112,7 +112,7 @@ search:
 # Live2D
 ## https://github.com/EYHN/hexo-helper-live2d
 live2d:
-  enable: true #开关插件版看板娘
+  enable: false #开关插件版看板娘
   scriptFrom: local # 默认
   pluginRootPath: live2dw/ # 插件在站点上的根目录(相对路径)
   pluginJsPath: lib/ # 脚本文件相对与插件根目录路径
@@ -137,3 +137,8 @@ live2d:
     show: true # 手机中是否展示
   react:
     opacity: 1 #设置透明度
+
+  # 音乐播放器
+  aplayer:
+    meting: true
+    asset_inject: false

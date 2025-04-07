@@ -71,7 +71,7 @@ index_img: /img/index.jpg
 archive_img: /img/archive.jpg
 
 # Note: tag page, not tags page
-tag_img: 
+tag_img:
 
 # The banner image of tag page, you can set the banner image for each tag
 # Format:
@@ -99,7 +99,7 @@ cover:
   aside_enable: true
   archives_enable: true
   # When cover is not set, the default cover is displayed
-  default_cover: 
+  default_cover:
     - /img/post/post1.jpg
     - /img/post/post2.jpg
     - /img/post/post3.jpg
@@ -968,14 +968,14 @@ note:
 
 # https://github.com/MoOx/pjax
 pjax:
-  enable: false
+  enable: true
   # Exclude the specified pages from pjax, such as '/music/'
   exclude:
-    # - /xxxxxx/
+    - /music/
 
 # Inject the css and script (aplayer/meting)
 aplayerInject:
-  enable: false
+  enable: true
   per_page: true
 
 # Snackbar - Toast Notification
@@ -1036,11 +1036,12 @@ css_prefix: true
 # Insert the code to head (before '</head>' tag) and the bottom (before '</body>' tag)
 inject:
   head:
-    # - <link rel="stylesheet" href="/xxx.css">
+    - <link rel="stylesheet" href="/css/custom.css"> #自定义效果,如果与主题自带的有冲突可能优先级不够不生效
   bottom:
     # - <script src="xxxx"></script>
     - <script src="/js/weather.js"></script>
-
+    - <div class="aplayer no-destroy" data-id="7702565075" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-lrcType="-1"> </div>
+    - <script src="/js/custom.js"></script>
 # CDN Settings
 # Don't modify the following settings unless you know how they work
 CDN:
