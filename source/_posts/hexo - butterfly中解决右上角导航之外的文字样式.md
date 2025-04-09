@@ -27,7 +27,7 @@ categories:
 #tp-weather-widget
   .sw-bar-slim
     color: var(--light-grey)
-    mix-blend-mode: difference; // 文件颜色反转
+    mix-blend-mode: difference; // 颜色反转
 ```
 
 
