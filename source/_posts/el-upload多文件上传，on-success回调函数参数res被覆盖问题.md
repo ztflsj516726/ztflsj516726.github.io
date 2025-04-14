@@ -13,7 +13,7 @@ categories:
 
 #### 这是一个简单的上传组件
 
-```vue
+```html
  <el-upload multiple :headers="headers" :action="uploadFileUrl" 
         :accept="defaultFormat" :limit="defaultLimit"
         :file-list="fileList" :disabled="!options.isEdit" 
