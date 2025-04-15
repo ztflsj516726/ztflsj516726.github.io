@@ -616,8 +616,8 @@ facebook_comments:
 # Twikoo
 # https://github.com/imaegoo/twikoo
 twikoo:
-  envId:
-  region: https://ztflsj516726.github.io
+  envId: https://ztf.netlify.app/.netlify/functions/twikoo
+  region: 
   # Use Twikoo visitor count as the page view count
   visitor: true
   option:
