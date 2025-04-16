@@ -968,10 +968,9 @@ note:
 
 # https://github.com/MoOx/pjax
 pjax:
-  enable: true
+  enable: false
   # Exclude the specified pages from pjax, such as '/music/'
   exclude:
-    - /music/
 
 # Inject the css and script (aplayer/meting)
 aplayerInject:
@@ -1038,9 +1037,7 @@ inject:
   head:
     - <link rel="stylesheet" href="/css/custom.css"> #自定义效果,如果与主题自带的有冲突可能优先级不够不生效
   bottom:
-    # - <script src="xxxx"></script>
     - <script src="/js/weather.js"></script>
-    - <div class="aplayer no-destroy" data-id="7702565075" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true" data-lrcType="-1"> </div>
     - <script src="/js/custom.js"></script>
 # CDN Settings
 # Don't modify the following settings unless you know how they work
