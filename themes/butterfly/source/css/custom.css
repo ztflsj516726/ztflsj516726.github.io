@@ -58,3 +58,9 @@ h1,h2,h3,h4,h5,h6,#subtitle,.content,.line,.post-content p,.post-content li{
 .post-meta-date:hover,.post-meta-date-created:hover{
 	cursor: url('./mouse/xxx.cur'), auto!important;
 }
+
+
+.loading-img {
+  background: url(https://fanhua7.oss-cn-beijing.aliyuncs.com/qiuqiu.png) no-repeat center center;
+  background-size: cover;
+}
