@@ -18,7 +18,7 @@ categories:
 
 
 
-## h函数的基本签名
+## h函数的基本签名	
 
 ```js
 h(type, props?, children?)
@@ -34,7 +34,7 @@ h(type, props?, children?)
 
 1. **创建简单的元素节点**
 
-   ```
+   ```js
    h('div', 'Hello World')
    ```
 
@@ -50,7 +50,7 @@ h(type, props?, children?)
 
 3. **创建有多个子节点的元素**
 
-   ```
+   ```js
    h('ul', [
      h('li', '第一项'),
      h('li', '第二项'),
@@ -61,7 +61,7 @@ h(type, props?, children?)
 
 4. **创建组件节点**
 
-   ```
+   ```js
    import MyComp from './MyComp.vue';
    
    h(MyComp, { propA: 123 })
@@ -70,7 +70,7 @@ h(type, props?, children?)
 
 5. **组合复杂节点**
 
-   ```
+   ```js
    h('div', { class: 'container' }, [
      h('h1', '标题'),
      h('p', '描述内容'),
