@@ -7,7 +7,7 @@ categories:
 - vue2 
 ---
 
-### 官方原话：
+## 官方原话：
 
 > [!IMPORTANT]
 >
@@ -17,7 +17,7 @@ categories:
 >
 > ​	每个组件实例都对应一个 **watcher** 实例，它会在组件渲染的过程中把“接触”过的数据 property 记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。
 
-### 拿下边这个vue组件来举例子
+## 拿下边这个vue组件来举例子
 
 ```vue
 <template>
@@ -49,13 +49,13 @@ export default {
 
 ​	getter被触发的时候会收集依赖(看看是哪些组件引用 ，到时候触发setter更新的时候需要更新组件)，setter被重新设置值的时候会被触发，根据getter的记录依赖去更新对应的组件，使其重新渲染。
 
-### 基本流程
+## 基本流程
 
 ​	`你写的 data 对象`   => `Vue 遍历每个属性`  =>  `用 Object.defineProperty 包装成 getter/setter` => 
 
 ​	`getter：收集依赖（谁在用这个值）,setter：当值改变，通知依赖更新`
 
-### 响应式封装
+## 响应式封装
 
 ```js
 let data = { msg: 'hello' }
@@ -75,9 +75,9 @@ Object.defineProperty(data, 'msg', {
 
 ```
 
-### Vue3响应式封装的局限性
+## Vue3响应式封装的局限性
 
-1. **无法监听数组的索引赋值或 length 改变**：
+1. #### **无法监听数组的索引赋值或 length 改变**：
 
    ```vue
    <div> {{ obj.name }} </div>
@@ -95,7 +95,7 @@ Object.defineProperty(data, 'msg', {
    Vue.set(obj, 'name', 'ztf')  // 两种都可以实现  需要手动触发
    ```
 
-2. **无法监听数组的索引赋值或 length 改变**：
+2. #### **无法监听数组的索引赋值或 length 改变**：
 
    ```vue
    <div v-for="item in arr"> {{ item }} </div>
@@ -115,9 +115,9 @@ Object.defineProperty(data, 'msg', {
    arr.splice[1] (vue2重写了数组的splice方法 导致可以拦截)
    ```
 
-3. **对象嵌套层级深，性能开销大（每层都要 defineProperty）**
+3. #### **对象嵌套层级深，性能开销大（每层都要 defineProperty）**
 
-### 总结
+## 总结
 
 | 项目     | Vue 2 响应式原理                   |
 | -------- | ---------------------------------- |
