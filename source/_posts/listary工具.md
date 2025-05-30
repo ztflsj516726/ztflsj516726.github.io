@@ -17,18 +17,18 @@ categories:
 
 - #### **双击ctrl 出现搜索列表，点击即可打开软件、文件夹或执行自定义命令**及网络搜索
 
-  ![image-20250530102333956](C:\Users\86198\AppData\Roaming\Typora\typora-user-images\image-20250530102333956.png)
+  ![image-20250530102333956](https://fanhua7.oss-cn-beijing.aliyuncs.com/image-20250530102333956.png)
 
-  ![image-20250530102344326](C:\Users\86198\AppData\Roaming\Typora\typora-user-images\image-20250530102344326.png)
+  ![image-20250530102344326](https://fanhua7.oss-cn-beijing.aliyuncs.com/image-20250530102344326.png)
 
 
 
 - #### **双击ctrl后再双击ctrl 出现编辑页面，点击编辑**
 
-<img src="C:\Users\86198\AppData\Roaming\Typora\typora-user-images\image-20250530101644634.png" alt="image-20250530101644634" style="zoom:90%;" />
+<img src="https://fanhua7.oss-cn-beijing.aliyuncs.com/image-20250530101644634.png" alt="image-20250530101644634" style="zoom:90%;" />
 
 - ### **编辑自定义网络搜索和命令**
 
-  <img src="C:\Users\86198\AppData\Roaming\Typora\typora-user-images\image-20250530101828240.png" alt="image-20250530101828240" style="zoom:90%;" />
+  <img src="https://fanhua7.oss-cn-beijing.aliyuncs.com/image-20250530101828240.png" alt="image-20250530101828240" style="zoom:90%;" />
 
-<img src="C:\Users\86198\AppData\Roaming\Typora\typora-user-images\image-20250530101909045.png" alt="image-20250530101909045" style="zoom:85%;" />
+<img src="https://fanhua7.oss-cn-beijing.aliyuncs.com/image-20250530101909045.png" alt="image-20250530101909045" style="zoom:85%;" />
