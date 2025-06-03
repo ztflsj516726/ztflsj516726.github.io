@@ -67,7 +67,12 @@ Write-Host "✅ 完成！按任意键退出..."
 ```
 
 - **`$b`是本地打包好的目录**
+
 - **`$a`是手机指定目录（`adb` 内的路径）**
+
+  对比`/sdcard/Android/data/com.sgcc.sgitg.wxwork/files/zipapp/1012259` 和`此电脑\Redmi Note 11 5G\内部存储设备\Android\data\com.sgcc.sgitg.wxwork\files\zipapp\` 。
+
+  发现`/sdcard`也就代表了 `此电脑\Redmi Note 11 5G\内部存储设备`
 
 > [!IMPORTANT]
 >
