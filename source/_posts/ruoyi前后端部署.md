@@ -33,9 +33,9 @@ VITE_BUILD_COMPRESS = gzip
 
 在/conf目录下创建`default.conf`文件
 
-```conf
+```json
 server {
-    listen 80;
+    listen 80; #监听80端口
     server_name localhost;
 
     # 静态资源目录
@@ -45,9 +45,10 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    # 接口代理：将 /dev-api 转发到后端服务（如 Spring Boot）
-    location /dev-api/ {
-        proxy_pass http://10.0.0.158:8080;  //后端地址   
+    # 接口代理：将 /prod-api 转发到后端服务（如 Spring Boot）
+    location /prod-api/ {
+        rewrite ^/prod-api/(.*)$ /$1 break;  # 去掉前缀
+        proxy_pass http://47.108.195.148:8080/;  # 注意这里要有斜杠
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -61,12 +62,12 @@ server {
 使用 Docker 开启 nginx 容器：
 
 ```
-docker run -d \     #后台运行
-  --name ruoyi-font \   #容器名称
-  -p 80:80 \ #端口映射 第一个是宿主机端口 第二个是容器端口
-  -v /root/data/ruoyi/ruoyi-font/nginx/html:/usr/share/nginx/html \ #数据卷挂载，让宿主机和容器的文件同步 同步静态文件
-  -v /root/data/ruoyi/ruoyi-font/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf \ #数据卷挂载，让宿主机和容器的文件同步 同步配置文件
-  nginx #镜像名称
+docker run -d \
+  --name ruoyi-font \
+  -p 80:80 \
+  -v /root/data/ruoyi/ruoyi-font/nginx/html:/usr/share/nginx/html \
+  -v /root/data/ruoyi/ruoyi-font/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf \
+  nginx
 
 ```
 
