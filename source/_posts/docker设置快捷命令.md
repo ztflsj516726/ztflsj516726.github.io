@@ -6,13 +6,13 @@ tags:
 - 快捷命令
 ---
 
-1. 输入命令编辑进入/root/.bashrc
+1. ### 输入命令编辑进入/root/.bashrc
 
    ```sh
    vi /root/.bashrc
    ```
 
-2. 在末尾追加（dpsa是快捷命令，=后边是真实执行的命令）
+2. ### 在末尾追加（dpsa是快捷命令，=后边是真实执行的命令）
 
    ```sh
    alias dpsa='docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Ports}}"'
@@ -20,13 +20,13 @@ tags:
 
    追加完成后`esc`退出编辑模式，`:wq`退出并保存
 
-3. 重启配置文件
+3. ### 重启配置文件
 
    ```sh
    source ~/.bashrc
    ```
 
-4. 验证命令
+4. ### 验证命令
 
    ```
    [root@iZ2vc5alcmxzfi3c3x0rp6Z ~]# dpsa
