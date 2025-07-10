@@ -86,13 +86,13 @@ docker run -d \
 > **配置关系说明**：
 >
 > - `application.yml` 为默认配置
-> - `application-druid.yml` 为数据源
+> - `application-dev.yml` 为本地开发环境
+> - `application-vir.yml` 为虚拟机环境
 > - `application-prod.yml` 为生产环境配置
-> - 如需同时使用：`--spring.profiles.active=prod,druid`
 
  
 
-`application.yml`
+`application.yml`（基础配置）
 
 ```yml
 # 项目相关配置
@@ -104,8 +104,6 @@ ruoyi:
   # 版权年份
   copyrightYear: 2025
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
-  # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
   captchaType: math
@@ -144,12 +142,24 @@ user:
 
 # Spring配置
 spring:
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 821477928@qq.com
+    password: qgbamwxeotpqbbgh
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
   # 资源信息
   messages:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: druid
+    active: dev
   # 文件上传
   servlet:
     multipart:
@@ -161,29 +171,8 @@ spring:
   devtools:
     restart:
       # 热部署开关
-      enabled: true
+      enabled: false
   # redis 配置
-  redis:
-    # 地址
-    host: 10.0.0.158
-    # 端口，默认为6379
-    port: 6380
-    # 数据库索引
-    database: 0
-    # 密码
-    password:
-    # 连接超时时间
-    timeout: 10s
-    lettuce:
-      pool:
-        # 连接池中的最小空闲连接
-        min-idle: 0
-        # 连接池中的最大空闲连接
-        max-idle: 8
-        # 连接池的最大数据库连接数
-        max-active: 8
-        # #连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: -1ms
 
 # token配置
 token:
@@ -203,7 +192,7 @@ mybatis:
   # 加载全局的配置文件
   configLocation: classpath:mybatis/mybatis-config.xml
   configuration:
-  # 开启驼峰命名
+    # 开启驼峰命名
     map-underscore-to-camel-case: true
 
 # PageHelper分页插件
@@ -234,85 +223,126 @@ xss:
 
 ```
 
-`application-druid.yml`
-
-```yml
-# 数据源配置
-spring:
-    datasource:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driverClassName: com.mysql.cj.jdbc.Driver
-        druid:
-            # 主库数据源
-            master:
-                url: jdbc:mysql://10.0.0.158:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-                username: root
-                password: Zhimeilideni990
-            # 从库数据源
-            slave:
-                # 从数据源开关/默认关闭
-                enabled: false
-                url: 
-                username: 
-                password: 
-            # 初始连接数
-            initialSize: 5
-            # 最小连接池数量
-            minIdle: 10
-            # 最大连接池数量
-            maxActive: 20
-            # 配置获取连接等待超时的时间
-            maxWait: 60000
-            # 配置连接超时时间
-            connectTimeout: 30000
-            # 配置网络超时时间
-            socketTimeout: 60000
-            # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-            timeBetweenEvictionRunsMillis: 60000
-            # 配置一个连接在池中最小生存的时间，单位是毫秒
-            minEvictableIdleTimeMillis: 300000
-            # 配置一个连接在池中最大生存的时间，单位是毫秒
-            maxEvictableIdleTimeMillis: 900000
-            # 配置检测连接是否有效
-            validationQuery: SELECT 1 FROM DUAL
-            testWhileIdle: true
-            testOnBorrow: false
-            testOnReturn: false
-            webStatFilter: 
-                enabled: true
-            statViewServlet:
-                enabled: true
-                # 设置白名单，不填则允许所有访问
-                allow:
-                url-pattern: /druid/*
-                # 控制台管理用户名和密码
-                login-username: root
-                login-password: Zhimeilideni990
-            filter:
-                stat:
-                    enabled: true
-                    # 慢SQL记录
-                    log-slow-sql: true
-                    slow-sql-millis: 1000
-                    merge-sql: true
-                wall:
-                    config:
-                        multi-statement-allow: true
-```
-
-`applicaton-prod.yml`
+`application-dev.yml`（本地开发测试环境）
 
 ```yml
 # 项目相关配置
 ruoyi:
+  name: ruoyi测试环境
   # 生产环境上传路径，覆盖开发环境路径
-  profile: /root/data/ruoyi/uploadPath
+  profile: D:/ruoyi/uploadPath
 # 生产环境配置
 server:
   # 端口（如果和开发端口相同，可不写）
   port: 8080
   servlet:
-    context-path: /dev-api
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    accept-count: 1000
+    threads:
+      max: 800
+      min-spare: 100
+# 日志级别覆盖为 info
+logging:
+  level:
+    com.ruoyi: info
+    org.springframework: warn
+
+# Redis 覆盖生产环境地址
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password:
+    timeout: 10s
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://10.0.0.158:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: Zhimeilideni990
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置连接超时时间
+      connectTimeout: 30000
+      # 配置网络超时时间
+      socketTimeout: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: root
+        login-password: Zhimeilideni990
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+# Swagger 生产环境一般禁用或按需开启
+swagger:
+  enabled: true
+  title: ruoyi接口文档
+  desc: ruoyi描述
+```
+
+`applicaton-vir.yml`（个人使用的虚拟机环境）
+
+```yml
+# 项目相关配置
+ruoyi:
+  name: ruoyi虚拟机环境
+  # 生产环境上传路径，覆盖开发环境路径
+  profile: /root/data/ruoyi/ruoyi-back/uploadPath
+# 生产环境配置
+server:
+  # 端口（如果和开发端口相同，可不写）
+  port: 8080
+  servlet:
+    context-path: /
   tomcat:
     uri-encoding: UTF-8
     accept-count: 1000
@@ -329,7 +359,7 @@ logging:
 spring:
   redis:
     host: 10.0.0.158
-    port: 6380
+    port: 6379
     database: 0
     password:
     timeout: 10s
@@ -339,16 +369,179 @@ spring:
         max-idle: 8
         max-active: 8
         max-wait: -1ms
-
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://10.0.0.158:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: Zhimeilideni990
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置连接超时时间
+      connectTimeout: 30000
+      # 配置网络超时时间
+      socketTimeout: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: root
+        login-password: Zhimeilideni990
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
 # Swagger 生产环境一般禁用或按需开启
 swagger:
   enabled: true
   title: ruoyi接口文档
   desc: ruoyi描述
-
-
-
 ```
+
+`applicaton-prod.yml`（生产环境）
+
+```yaml
+# 项目相关配置
+ruoyi:
+  name: ruoyi服务器环境
+  # 生产环境上传路径，覆盖开发环境路径
+  profile: /root/data/ruoyi/ruoyi-back/uploadPath
+# 生产环境配置
+server:
+  # 端口（如果和开发端口相同，可不写）
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    accept-count: 1000
+    threads:
+      max: 800
+      min-spare: 100
+# 日志级别覆盖为 info
+logging:
+  level:
+    com.ruoyi: info
+    org.springframework: warn
+
+# Redis 覆盖生产环境地址
+spring:
+  redis:
+    host: 47.108.195.148
+    port: 6379
+    database: 0
+    password:
+    timeout: 10s
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://47.108.195.148:3307/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: Zhimeilideni990
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置连接超时时间
+      connectTimeout: 30000
+      # 配置网络超时时间
+      socketTimeout: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: root
+        login-password: Zhimeilideni990
+      filter:
+        stat:
+          enabled: true
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+# Swagger 生产环境一般禁用或按需开启
+swagger:
+  enabled: true
+  title: ruoyi接口文档
+  desc: ruoyi描述
+```
+
+
 
 ## 2.镜像构建
 
@@ -379,7 +572,7 @@ COPY ruoyi-admin.jar ruoyi-admin.jar
 
 # 启动应用
 
-ENTRYPOINT   ["java", "-Djava.awt.headless=true", "-jar", "ruoyi-admin.jar", "--spring.profiles.active=prod,druid"]
+ENTRYPOINT   ["java", "-Djava.awt.headless=true", "-jar", "ruoyi-admin.jar", "--spring.profiles.active=prod"]
 
 ```
 
