@@ -393,9 +393,43 @@ docker build -t my-java-app(镜像名称) .   (.代表当前目录)
 
 ## 3.容器创建
 
+- 使用docker run(不易维护)
+
 ```
 docker run -d -v /root/data/ruoyi/uploadPath:/root/data/ruoyi/uploadPath -p 8080:8080 --name ruoyi-font ruoyi-font-image
 ```
+
+- docker-compose
+
+```yaml
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./ruoyi-back  # Dockerfile 所在目录
+    container_name: ruoyi-back
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=vir
+    volumes:
+      - /root/data/ruoyi/ruoyi-back/uploadPath:/root/data/ruoyi/ruoyi-back/uploadPath
+
+  frontend:
+    image: nginx
+    container_name: ruoyi-font
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - /root/data/ruoyi/ruoyi-font/nginx/html:/usr/share/nginx/html
+      - /root/data/ruoyi/ruoyi-font/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+
+```
+
+
 
 > [!NOTE]
 >
