@@ -75,7 +75,7 @@ Object.defineProperty(data, 'msg', {
 
 ```
 
-## Vue3响应式封装的局限性
+## Vue2响应式封装的局限性
 
 1. #### **无法监听数组的索引赋值或 length 改变**：
 
