@@ -13,20 +13,20 @@ tags:
 `Proxy` 可以为对象创建一个代理，在读取、设置等操作发生时拦截它们。Vue 3 的 `reactive()` 主要通过 Proxy 代理对象，从而追踪属性访问并响应属性变化。
 
 ```ts
-const raw = { count: 0 }
+const raw = { count: 0 };
 const proxy = new Proxy(raw, {
   get(target, key, receiver) {
-    console.log('读取属性', key)
-    return Reflect.get(target, key, receiver)
+    console.log("读取属性", key);
+    return Reflect.get(target, key, receiver);
   },
   set(target, key, value, receiver) {
-    console.log('设置属性', key, value)
-    return Reflect.set(target, key, value, receiver)
+    console.log("设置属性", key, value);
+    return Reflect.set(target, key, value, receiver);
   },
-})
+});
 
-proxy.count       // 读取属性
-proxy.count = 1   // 设置属性
+proxy.count; // 读取属性
+proxy.count = 1; // 设置属性
 ```
 
 注意：
@@ -38,17 +38,17 @@ proxy.count = 1   // 设置属性
 ## 2. `reactive` 解构为什么可能失去响应式联系？
 
 ```ts
-const state = reactive({ count: 0 })
-const { count } = state
+const state = reactive({ count: 0 });
+const { count } = state;
 
-state.count++
-console.log(count) // 仍然是 0
+state.count++;
+console.log(count); // 仍然是 0
 ```
 
 解构基本类型属性，相当于把当时的值赋给一个新变量：
 
 ```ts
-const count = state.count
+const count = state.count;
 ```
 
 `count` 是普通局部变量。之后修改 `state.count` 不会自动修改这个局部变量。
@@ -57,13 +57,13 @@ const count = state.count
 
 ```ts
 const state = reactive({
-  user: { name: 'Tom' },
-})
+  user: { name: "Tom" },
+});
 
-const { user } = state
-user.name = 'Jerry'
+const { user } = state;
+user.name = "Jerry";
 
-console.log(state.user.name) // 'Jerry'
+console.log(state.user.name); // 'Jerry'
 ```
 
 这里 `user` 保存的是同一个嵌套响应式对象的引用，因此修改 `user.name` 也会影响 `state.user.name`。
@@ -71,20 +71,20 @@ console.log(state.user.name) // 'Jerry'
 但重新给局部变量赋值不会替换原对象的属性：
 
 ```ts
-let { user } = state
-user = { name: 'Jerry' }
+let { user } = state;
+user = { name: "Jerry" };
 
-console.log(state.user.name) // 仍然是原来的值
+console.log(state.user.name); // 仍然是原来的值
 ```
 
 如果需要解构后仍保持与响应式属性的联系，可以使用 `toRefs()`：
 
 ```ts
-const state = reactive({ count: 0 })
-const { count } = toRefs(state)
+const state = reactive({ count: 0 });
+const { count } = toRefs(state);
 
-state.count++
-console.log(count.value) // 1
+state.count++;
+console.log(count.value); // 1
 ```
 
 ## 3. `track` 与 `trigger`
@@ -95,13 +95,13 @@ Vue 的响应式系统可以粗略理解为两个步骤：
 - **`trigger`：触发更新。** 之后该属性变化时，Vue 通知依赖它的 effect。
 
 ```ts
-const state = reactive({ count: 0 })
+const state = reactive({ count: 0 });
 
 watchEffect(() => {
-  console.log(state.count)
-})
+  console.log(state.count);
+});
 
-state.count++ // count 变化，相关 effect 会再次运行
+state.count++; // count 变化，相关 effect 会再次运行
 ```
 
 如果 `watchEffect` 中根本没有读取 `state.count`，那么单独修改 `count` 就不会因为这个属性而触发该 effect。
@@ -113,17 +113,17 @@ state.count++ // count 变化，相关 effect 会再次运行
 ```ts
 const state = reactive({
   showName: true,
-  name: 'Tom',
+  name: "Tom",
   age: 23,
-})
+});
 
 watchEffect(() => {
   if (state.showName) {
-    console.log(state.name)
+    console.log(state.name);
   } else {
-    console.log(state.age)
+    console.log(state.age);
   }
-})
+});
 ```
 
 - 初次运行：读取 `showName` 和 `name`。
@@ -139,17 +139,17 @@ Vue 会清理不再使用的旧依赖，而不是只不断累加依赖。
 const state = reactive({
   price: 100,
   quantity: 2,
-})
+});
 
 const total = computed(() => {
-  console.log('计算中')
-  return state.price * state.quantity
-})
+  console.log("计算中");
+  return state.price * state.quantity;
+});
 
-console.log(total.value) // 第一次读取时计算，200
-console.log(total.value) // 依赖没变，复用缓存
-state.price = 120        // 使计算结果失效
-console.log(total.value) // 再次读取时重新计算，240
+console.log(total.value); // 第一次读取时计算，200
+console.log(total.value); // 依赖没变，复用缓存
+state.price = 120; // 使计算结果失效
+console.log(total.value); // 再次读取时重新计算，240
 ```
 
 重点：
@@ -174,16 +174,16 @@ console.log(total.value) // 再次读取时重新计算，240
 
 ```ts
 watch(keyword, (newValue, oldValue) => {
-  searchApi(newValue)
-})
+  searchApi(newValue);
+});
 ```
 
 这里明确监听 `keyword`。
 
 ```ts
 watchEffect(() => {
-  searchApi(keyword.value, page.value)
-})
+  searchApi(keyword.value, page.value);
+});
 ```
 
 这里会自动追踪执行时读取的 `keyword.value` 和 `page.value`。
@@ -192,14 +192,14 @@ watchEffect(() => {
 
 ```vue
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { computed, reactive } from "vue";
 
 const form = reactive({
   price: 100,
   quantity: 2,
-})
+});
 
-const total = computed(() => form.price * form.quantity)
+const total = computed(() => form.price * form.quantity);
 </script>
 
 <template>
@@ -225,12 +225,12 @@ const total = computed(() => form.price * form.quantity)
 
 ```vue
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive } from "vue";
 
 const state = reactive({
   count: 0,
-  name: 'Tom',
-})
+  name: "Tom",
+});
 </script>
 
 <template>
@@ -255,13 +255,13 @@ const state = reactive({
 
 ```vue
 <script setup lang="ts">
-import { reactive } from 'vue'
-import UserInfo from './UserInfo.vue'
+import { reactive } from "vue";
+import UserInfo from "./UserInfo.vue";
 
 const state = reactive({
   count: 0,
-  name: 'Tom',
-})
+  name: "Tom",
+});
 </script>
 
 <template>
@@ -275,7 +275,7 @@ const state = reactive({
 
 ```vue
 <script setup lang="ts">
-defineProps<{ name: string }>()
+defineProps<{ name: string }>();
 </script>
 
 <template>
@@ -300,11 +300,11 @@ defineProps<{ name: string }>()
 每次父组件重新渲染时，`{ name: state.name }` 都会创建一个新对象：
 
 ```ts
-const userA = { name: 'Tom' }
-const userB = { name: 'Tom' }
+const userA = { name: "Tom" };
+const userB = { name: "Tom" };
 
-userA.name === userB.name // true
-userA === userB           // false
+userA.name === userB.name; // true
+userA === userB; // false
 ```
 
 虽然对象内容相同，但引用不同。Vue 通常会把这个 prop 视为发生了变化，因此子组件可能更新。
@@ -315,9 +315,9 @@ userA === userB           // false
 const state = reactive({
   count: 0,
   user: {
-    name: 'Tom',
+    name: "Tom",
   },
-})
+});
 ```
 
 ```vue
@@ -355,9 +355,9 @@ computed / watch / watchEffect 或组件渲染 effect 响应变化
 ### 题目 1：解构
 
 ```ts
-const state = reactive({ count: 0 })
-const { count } = state
-state.count++
+const state = reactive({ count: 0 });
+const { count } = state;
+state.count++;
 ```
 
 `count` 局部变量会自动变成 `1` 吗？
@@ -367,11 +367,11 @@ state.count++
 ```ts
 watchEffect(() => {
   if (state.showName) {
-    console.log(state.name)
+    console.log(state.name);
   } else {
-    console.log(state.age)
+    console.log(state.age);
   }
-})
+});
 ```
 
 当 `showName` 变成 `false` 并且 effect 重新运行后，单独修改 `name` 还会触发这个 effect 吗？
